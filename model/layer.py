@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 
 def get_freq_indices(method):
+    # 该函数根据选择的频域方法返回对应的频率坐标映射。函数根据选择的method，生成对应数量的频率坐标。
     assert method in ['top1','top2','top4','top8','top16','top32',
                       'bot1','bot2','bot4','bot8','bot16','bot32',
                       'low1','low2','low4','low8','low16','low32']
@@ -27,6 +28,8 @@ def get_freq_indices(method):
     return mapper_x, mapper_y
 
 class MultiSpectralAttentionLayer(torch.nn.Module):
+    # 多频谱注意力层的定义。初始化函数接收通道数、DCT的高度和宽度、缩减率（reduction）和频率选择方法。
+    # 根据选择的频率方法获取频率映射，并初始化DCT层和全连接层。
     def __init__(self, channel, dct_h, dct_w, reduction = 16, freq_sel_method = 'top16'):
         super(MultiSpectralAttentionLayer, self).__init__()
         self.reduction = reduction
